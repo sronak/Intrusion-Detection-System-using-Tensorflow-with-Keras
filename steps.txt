@@ -1,0 +1,7 @@
+1. tshark cmd generates test.pcap file
+2. FilterPackets.py reads test.pcap and generates ./pcapdata/...csv file
+3. GenerateFlows.py reads above file and generates ./flowdata/...csv file
+4. generatingfortrainingpackets.py creates outputofforalgorithm.csv file, for training move this file to parent folder
+5. In parent folder, "svm all kernels" file reads above file and saves model into "linear_svm_model.sav"
+6. "Prediction of result" file reads above .sav model and predicts packets captured ("outputofforalgorithm1.csv")
+

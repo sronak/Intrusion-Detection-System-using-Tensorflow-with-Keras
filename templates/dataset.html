@@ -1,0 +1,51 @@
+{% extends 'header.html'%}
+{% block content %}
+<div class="banner_inner_content_agile_w3l">
+</div>
+
+<div class="team">
+	<div class="container">
+		<h3 class="heading-agileinfo">Dataset<span></span></h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Age</th>
+                    <th scope="col">sex</th>
+                    <th scope="col">cp</th>
+                    <th scope="col">trestbps</th>
+                    <th scope="col">chol</th>
+                    <th scope="col">fbs</th>
+                    <th scope="col">restecg</th>
+                    <th scope="col">thalach</th>
+                    <th scope="col">exang</th>
+                    <th scope="col">oldpeak</th>
+                    <th scope="col">slope</th>
+                    <th scope="col">ca</th>
+                    <th scope="col">thal</th>
+                    <th scope="col">target</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in data %}
+                <tr>
+                    <td>{{a[0]}}</td>
+                    <td>{{a[1]}}</td>
+                    <td>{{a[2]}}</td>
+                    <td>{{a[3]}}</td>
+                    <td>{{a[4]}}</td>
+                    <td>{{a[5]}}</td>
+                    <td>{{a[6]}}</td>
+                    <td>{{a[7]}}</td>
+                    <td>{{a[8]}}</td>
+                    <td>{{a[9]}}</td>
+                    <td>{{a[10]}}</td>
+                    <td>{{a[11]}}</td>
+                    <td>{{a[12]}}</td>
+                    <td>{{a[13]}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+	</div>
+</div>
+{% endblock %}

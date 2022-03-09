@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>login</title>
+	<!--/tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="New Clinic Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	<script type="application/x-javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!--//tags -->
+	<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all" />
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
+	<link href="{{ url_for('static', filename='css/appointment_style.css') }}" rel="stylesheet" type="text/css" media="all" />
+	<link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
+	<!-- //for bootstrap working -->
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700" rel="stylesheet">
+</head>
+
+<body>
+	<!-- header -->
+	<div class="header" id="home">
+		<div class="top_menu_w3layouts">
+<div class="container">
+			<div class="header_left">
+				<ul>
+
+				</ul>
+			</div>
+			<div class="header_right">
+				<ul class="forms_right">
+					<li><a href="\login"> Login</a> </li>
+					<li><a href="\register"> Register</a> </li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+			</div>
+		</div>
+
+		<div class="content white">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+						<a class="navbar-brand" href="/">
+							<h1><span class="fa fa-stethoscope" aria-hidden="true"></span>Intrusion detection system </h1>
+						</a>
+					</div>
+					<!--/.navbar-header-->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<nav>
+							<ul class="nav navbar-nav">
+								<li><a href="/">Home</a></li>
+								<li><a href=""></a></li>
+								<li><a href=""></a></li>
+
+							</ul>
+						</nav>
+					</div>
+					<!--/.navbar-collapse-->
+					<!--/.navbar-->
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- banner -->
+<!--<div class="banner_inner_content_agile_w3l"></div>-->
+	<!--//banner -->
+	<div class="w3ls-banner">
+	<div class="heading">
+		<h1>Login</h1>
+	</div>
+		<div class="container_1">
+			<div class="heading">
+				<h2>Please Enter login Details</h2>
+			{% include '_flashmsg.html' %}<br><br>
+			</div>
+			<div class="agile-form">
+				<form action="/login" method="post">
+					<ul class="field-list">
+						<li>
+							<label class="form-label"> 
+								Mobile
+								<span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="text" name="mobno" placeholder="Enter mobile no" id="mobno" required >
+							</div>
+						</li>
+						<li>
+							<label class="form-label">
+								Password
+								<span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="password" name="pas" placeholder="Enter password" id="pas" required >
+							</div>
+						</li>
+						<li><p id="msg"></p></li>
+					</ul>
+					<!--<input type="submit" value="LOGIN">-->
+					<div align="center"><button type="button" class="btn btn-primary btn-lg" id="btnaddstudent">Login</button></div>
+				</form>	
+			</div>
+		</div>
+</div>
+	<!-- footer -->
+	<div class="footer_wthree_agile">
+		<p>Intrusion detection system</p>
+	</div>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+	<script>
+		$('ul.dropdown-menu li').hover(function () {
+			$(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+		}, function () {
+			$(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+		});
+	</script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+	<script>
+	$(document).ready(function() {
+        $("#btnaddstudent").click(function() {
+            var mobno = $("#mobno").val();
+            var pas = $("#pas").val();
+            console.log(mobno);
+			console.log(pas);
+            if (mobno == '' || pas == '') {
+                alert("Please fill all fields...!!!!!!");
+            }
+            else if(!mobno.match(/^[5-9]\d{9}$|^[1-9]\d{9}$/)) {
+                alert("Moblie no not in valid format");
+            }
+            else
+            {
+                $.ajax({
+                    url: '/login',
+                    type: 'post',
+                    data:{mobno:mobno,
+                          pas:pas
+                    },
+                    success: function(result){
+                    	console.log(result)
+                        if (result.redirect)
+                        {
+                            window.location.href = result.redirect;
+                            alert("Login Successful");
+                        }
+                        $('#msg').html(result).css("color", "red");
+                    },
+                });
+            }
+        });
+    });
+	</script>
+
+<!-- //bootstrap-modal-pop-up --> 
+	<!-- js -->
+
+</body>
+
+</html>

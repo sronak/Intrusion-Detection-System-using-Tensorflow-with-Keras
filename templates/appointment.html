@@ -1,0 +1,178 @@
+{% extends 'header.html'%}
+{% block content %}
+<div class="banner_inner_content_agile_w3l">
+
+</div>
+<div class="w3ls-banner">
+	<div class="heading">
+		<h1>Appoint My Doctor</h1>
+	</div>
+		<div class="container_1">
+			<div class="heading">
+				<h2>Please Enter Patients Details</h2>
+				<br>
+			</div>
+			<div class="agile-form">
+				<form action="/" method="post">
+					<ul class="field-list">
+						<li>
+							<label class="form-label">
+								Full Name
+								<span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="text" name="patient_name" placeholder="Enter Patients Name" id="patient_name" required >
+							</div>
+						</li>
+						<li>
+							<label class="form-label">
+							   Gender
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<select class="form-dropdown" name="gender" id="gender" required>
+									<option value="">&nbsp;</option>
+									<option value="Male"> Male </option>
+									<option value="Female"> Female </option>
+								</select>
+							</div>
+						<li>
+						<li>
+							<label class="form-label">
+							   Mobile Number
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="text" name="mobile_number" placeholder="Mobile Number" id="mobile_number" required >
+							</div>
+						</li>
+						<li>
+							<label class="form-label">
+							   Date of Birth
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="date" name="dob" placeholder="DOB" id="dob" required >
+							</div>
+						</li>
+
+						<li>
+							<label class="form-label">
+							   Address
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+                                <input type="text" name="address" placeholder=" " id="address" required>
+							</div>
+						</li>
+						<li>
+							<label class="form-label">
+							   E-Mail Address
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="email" name="email" placeholder="myname@example.com" id="email" required>
+							</div>
+						</li>
+						<li>
+							<label class="form-label">
+							   Doctor name
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<select name="doctorname" id="doctorname">
+									<option value="">Select Doctor</option>
+									{% for a in dr_res %}
+										<option value="{{ a[1] }}">Dr. {{ a[1] }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</li>
+                        <li>
+							<label class="form-label">
+							   Appointment Time
+							   <span class="form-required"> * </span>
+							</label>
+							<div class="form-input">
+								<input type="time" name="time" placeholder="TIME" id="time" required >
+							</div>
+						</li>
+						<li>
+							<label class="form-label">
+
+							</label>
+							<div class="form-input">
+								<p id="msg"></p>
+							</div>
+						</li>
+					</ul>
+					<!--<input type="submit" value="Book Appointment">-->
+					<div align="center"><button type="button" class="btn btn-primary btn-lg" id="btnappointment">Book Appointment</button></div>
+				</form>
+			</div>
+		</div>
+</div>
+
+
+	<!-- js -->
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+
+	<script>
+		$(document).ready(function() {
+			$("#btnappointment").click(function() {
+				var patient_name = $("#patient_name").val();
+				var mobile_number = $("#mobile_number").val();
+
+				var gender = $("#gender").val();
+				var dob = $("#dob").val();
+				var time = $("#time").val();
+
+				var email = $("#email").val();
+				var address = $("#address").val();
+				var doctorname = $("#doctorname").val();
+
+				if (patient_name == '' || email == '' || mobile_number =='' || address == '' || doctorname == ''|| gender == '' || dob == '' || time == '' ) {
+					alert("Please fill all fields...!!!!!!");
+				}
+				else if(!patient_name.match(/^[a-zA-Z ]*$/))
+				{
+					alert("Name not in valid format");
+				}
+				else if(!mobile_number.match(/^[5-9]\d{9}$|^[1-9]\d{9}$/)) {
+					alert("Moblie no not in valid format");
+				}
+				else if(!email.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/)) {
+					alert("Mailid not in valid format");
+				}
+				else
+				{
+					$.ajax({
+						url: '/appointment',
+						type: 'post',
+						data:{patient_name:patient_name,
+							  mobile_number:mobile_number,
+							  email:email,
+							  address:address,
+							  doctorname:doctorname,
+							  gender:gender,
+							  dob:dob,
+							  time:time,
+						},
+						success: function(result){
+							if (result.redirect)
+							{
+								window.location.href = result.redirect;
+								alert("Appointed successfully");
+							}
+							$('#msg').html(result).css("color", "red");
+						},
+					});
+				}
+			});
+		});
+	</script>
+
+
+
+{% endblock %}
